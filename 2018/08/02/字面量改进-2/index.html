@@ -7,26 +7,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>JSONP原理 | Alin - a water coder</title>
+  <title>字面量改进 | Alin - a water coder</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="JavaScript," />
+    <meta name="keywords" content="alin,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
   
 
-  <meta name="description" content="JSONP（JSON with padding）是利用script标签解决跨域资源共享的一种方式，利用回调。用JSONP抓取到的数据不是JSON，而是任意的JavaScript，用JavaScript解释器运行，而不是用JSON解释器解析 123456var script = document.createElement(&amp;apos;script&amp;apos;);script.src = &amp;apos">
-<meta name="keywords" content="JavaScript">
+  <meta name="description" content="这是解构赋值的反向操作123const name = &amp;apos;alin&amp;apos;;const age = 25;const user = &amp;#123; name, age &amp;#125;; 可以省去function关键字123const obj = &amp;#123;  sayName() &amp;#123;&amp;#125;&amp;#125; 操作符  1重组数组 const child = [‘a’, ‘b’];">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JSONP原理">
-<meta property="og:url" content="http://yoursite.com/2018/08/02/JSONP原理/index.html">
+<meta property="og:title" content="字面量改进">
+<meta property="og:url" content="http://yoursite.com/2018/08/02/字面量改进-2/index.html">
 <meta property="og:site_name" content="Alin - a water coder">
-<meta property="og:description" content="JSONP（JSON with padding）是利用script标签解决跨域资源共享的一种方式，利用回调。用JSONP抓取到的数据不是JSON，而是任意的JavaScript，用JavaScript解释器运行，而不是用JSON解释器解析 123456var script = document.createElement(&amp;apos;script&amp;apos;);script.src = &amp;apos">
+<meta property="og:description" content="这是解构赋值的反向操作123const name = &amp;apos;alin&amp;apos;;const age = 25;const user = &amp;#123; name, age &amp;#125;; 可以省去function关键字123const obj = &amp;#123;  sayName() &amp;#123;&amp;#125;&amp;#125; 操作符  1重组数组 const child = [‘a’, ‘b’];">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-02T06:09:53.545Z">
+<meta property="og:updated_time" content="2018-08-02T06:16:03.722Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JSONP原理">
-<meta name="twitter:description" content="JSONP（JSON with padding）是利用script标签解决跨域资源共享的一种方式，利用回调。用JSONP抓取到的数据不是JSON，而是任意的JavaScript，用JavaScript解释器运行，而不是用JSON解释器解析 123456var script = document.createElement(&amp;apos;script&amp;apos;);script.src = &amp;apos">
+<meta name="twitter:title" content="字面量改进">
+<meta name="twitter:description" content="这是解构赋值的反向操作123const name = &amp;apos;alin&amp;apos;;const age = 25;const user = &amp;#123; name, age &amp;#125;; 可以省去function关键字123const obj = &amp;#123;  sayName() &amp;#123;&amp;#125;&amp;#125; 操作符  1重组数组 const child = [‘a’, ‘b’];">
 
   
 
@@ -150,12 +149,17 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#这是解构赋值的反向操作"><span class="toc-text">这是解构赋值的反向操作</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="post-JSONP原理" class="article article-type-post" itemprop="blogPost">
+   <article id="post-字面量改进-2" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">JSONP原理</h1>
+    <h1 class="post-title">字面量改进</h1>
 
     <div class="article-meta">
       <span>
@@ -171,17 +175,12 @@
       
 
       
-  <span class="article-category">
-    <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-  </span>
-
 
 
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://www.zhengzejing.top/2018/08/02/JSONP原理/#disqus_thread"></a>
+          <a href="https://www.zhengzejing.top/2018/08/02/字面量改进-2/#disqus_thread"></a>
         </span>
       
 
@@ -198,10 +197,13 @@
 
   <div class="article-content">
     
-      <p>JSONP（JSON with padding）是利用script标签解决跨域资源共享的一种方式，利用回调。用JSONP抓取到的数据不是JSON，而是任意的JavaScript，用JavaScript解释器运行，而不是用JSON解释器解析</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var script = document.createElement(&apos;script&apos;);</span><br><span class="line">script.src = &apos;http://www.freegeoip.com/json/?callback=handleResponse&apos;;</span><br><span class="line">document.body.insertBefore(script, docuemnt.body.firstChild);</span><br><span class="line">  function handleResponse(e) &#123;</span><br><span class="line">  console.log(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以理解动态创建script标签，并在url后面跟上回调函数，最终script标签里面填充的东西变成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">handleResponse(response); // 可执行的JavaScript代码</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://www.cnblogs.com/dowinning/archive/2012/04/19/json-jsonp-jquery.html" target="_blank" rel="noopener">参考</a></p>
+      <h3 id="这是解构赋值的反向操作"><a href="#这是解构赋值的反向操作" class="headerlink" title="这是解构赋值的反向操作"></a>这是解构赋值的反向操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const name = &apos;alin&apos;;</span><br><span class="line">const age = 25;</span><br><span class="line">const user = &#123; name, age &#125;;</span><br></pre></td></tr></table></figure>
+<p>可以省去function关键字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const obj = &#123;</span><br><span class="line">  sayName() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><figcaption><span>操作符  </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">重组数组</span><br></pre></td></tr></table></figure>
+<p>const child = [‘a’, ‘b’];<br>const parent = […chid, ‘c’]; //  [‘a’, ‘b’, ‘c’];<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">获取数组的某些元素</span><br><span class="line">const &#123; fisrt, ...rest &#125; = parent;</span><br><span class="line">console.log(rest); //  [&apos;b&apos;, &apos;c&apos;];</span><br><span class="line"></span><br><span class="line">方法传参</span><br></pre></td></tr></table></figure></p>
+<p>const args = [1, 2, 3];<br>function f(a, b, c) {return a+b+c;}<br>f(…args);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">和apply效果一样</span><br></pre></td></tr></table></figure></p>
+<p>f.apply(null, args);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">对于对象，同样可以组合</span><br></pre></td></tr></table></figure></p>
+<p>const newState = {name: ‘alin’, age: 25};<br>const oldState = {level: 1};<br>const state = {…newState, …oldState};<br><code>`</code></p>
 
     
   </div>
@@ -239,10 +241,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/08/02/跨域方式-1/">
+    <a class="show pull-left" href="/2018/08/02/JSONP原理/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/08/02/字面量改进-2/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -334,7 +336,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2018/08/02/JSONP原理/';
+    var disqus_url = 'http://yoursite.com/2018/08/02/字面量改进-2/';
     
     (function(){
       var dsq = document.createElement('script');
