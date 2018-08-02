@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Array.prototype.reducer用法 | Alin - a water coder</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="Array.prototype.reduce123reduce(function(accumulator, currentValue, index, array) &amp;#123;&amp;#125;) 第一个参数是累计的值，第二个参数是当前的值，第三个是下标，第四个是数组本身reduce还可以传入一个初始值用途： 1、数组求和123[1, 2, 3, 4].reduce(function(sum, cur)">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Array.prototype.reducer用法">
+<meta property="og:url" content="http://yoursite.com/2018/08/02/Array-prototype-reducer用法/index.html">
+<meta property="og:site_name" content="Alin - a water coder">
+<meta property="og:description" content="Array.prototype.reduce123reduce(function(accumulator, currentValue, index, array) &amp;#123;&amp;#125;) 第一个参数是累计的值，第二个参数是当前的值，第三个是下标，第四个是数组本身reduce还可以传入一个初始值用途： 1、数组求和123[1, 2, 3, 4].reduce(function(sum, cur)">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-02T06:27:59.247Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Array.prototype.reducer用法">
+<meta name="twitter:description" content="Array.prototype.reduce123reduce(function(accumulator, currentValue, index, array) &amp;#123;&amp;#125;) 第一个参数是累计的值，第二个参数是当前的值，第三个是下标，第四个是数组本身reduce还可以传入一个初始值用途： 1、数组求和123[1, 2, 3, 4].reduce(function(sum, cur)">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/前端"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Array-prototype-reduce"><span class="toc-text">Array.prototype.reduce</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、数组求和"><span class="toc-text">1、数组求和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、将二维数组转成一位数组"><span class="toc-text">2、将二维数组转成一位数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、计算数组中元素出现的个数"><span class="toc-text">3、计算数组中元素出现的个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、数组去重"><span class="toc-text">4、数组去重</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Array-prototype-reducer用法" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Array.prototype.reducer用法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.08.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Alin</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://www.zhengzejing.top/2018/08/02/Array-prototype-reducer用法/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="Array-prototype-reduce"><a href="#Array-prototype-reduce" class="headerlink" title="Array.prototype.reduce"></a>Array.prototype.reduce</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reduce(function(accumulator, currentValue, index, array) &#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>第一个参数是累计的值，第二个参数是当前的值，第三个是下标，第四个是数组本身<br>reduce还可以传入一个初始值<br>用途：</p>
+<h3 id="1、数组求和"><a href="#1、数组求和" class="headerlink" title="1、数组求和"></a>1、数组求和</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4].reduce(function(sum, cur) &#123;</span><br><span class="line">	return sum + cur;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="2、将二维数组转成一位数组"><a href="#2、将二维数组转成一位数组" class="headerlink" title="2、将二维数组转成一位数组"></a>2、将二维数组转成一位数组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[1, 2], [3, 4]].reduce(function(a, b) &#123;</span><br><span class="line">	return a.concat(b);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="3、计算数组中元素出现的个数"><a href="#3、计算数组中元素出现的个数" class="headerlink" title="3、计算数组中元素出现的个数"></a>3、计算数组中元素出现的个数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var names = [&apos;zzj&apos;, &apos;alin&apos;, &apos;zzj&apos;, &apos;alin&apos;, &apos;aaa&apos;];</span><br><span class="line">var returnObj = names.reduce(function(allNames, name) &#123;</span><br><span class="line">if(name in allNames) &#123;</span><br><span class="line">	allNames[name] ++ ;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	allNames[name] = 1;</span><br><span class="line">&#125;</span><br><span class="line">return allNames;</span><br><span class="line">&#125;, &#123;&#125;);</span><br><span class="line">console.log(returnObj); //  &#123;zzj: 2, alin: 2, aaa: 1&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4、数组去重"><a href="#4、数组去重" class="headerlink" title="4、数组去重"></a>4、数组去重</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var arr = [1, 2, 3, 4, 5, 2, 3, 4, 5, 6];</span><br><span class="line">var retArray = arr.reduce(function(arr, ele) &#123;</span><br><span class="line">  if(arr.indexOf(ele) === -1) &#123;</span><br><span class="line">  arr.push(ele);</span><br><span class="line">&#125;</span><br><span class="line">return arr;</span><br><span class="line">&#125;, []);</span><br><span class="line">console.log(retArray); //  [1, 2, 3, 4, 5, 6]</span><br></pre></td></tr></table></figure>
+<p>btw：数组去重可以用Set<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var result = Array.from(new Set([1, 2, 3, 4, 5, 2, 3, 4, 5, 6]));</span><br></pre></td></tr></table></figure></p>
+
+    
+  </div>
+
+  
+      <div class="git"></div>
+  
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持 Alin</div>
+        <ul>
+        
+          <li class="item">
+            <span>微信扫一扫</span>
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <span>支付宝扫一扫</span>
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/02/Untitled/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/前端"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/08/02/Array-prototype-reducer用法/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
