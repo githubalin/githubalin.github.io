@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>再次理解继承 | Alin - a water coder</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="JavaScript," />
+  
+
+  <meta name="description" content="原则：a、构造函数引用属性不共享b、原型属性共享1、原型链继承12345678910111213function Person(name = &amp;apos;xiaoming&amp;apos;) &amp;#123;	this.name = name;	this.shose = [&amp;apos;nike&amp;apos;, &amp;apos;puma&amp;apos;, &amp;apos;vans&amp;apos;];&amp;#125;Person.p">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再次理解继承">
+<meta property="og:url" content="http://yoursite.com/2018/08/02/再次理解继承-1/index.html">
+<meta property="og:site_name" content="Alin - a water coder">
+<meta property="og:description" content="原则：a、构造函数引用属性不共享b、原型属性共享1、原型链继承12345678910111213function Person(name = &amp;apos;xiaoming&amp;apos;) &amp;#123;	this.name = name;	this.shose = [&amp;apos;nike&amp;apos;, &amp;apos;puma&amp;apos;, &amp;apos;vans&amp;apos;];&amp;#125;Person.p">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-02T05:56:12.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="再次理解继承">
+<meta name="twitter:description" content="原则：a、构造函数引用属性不共享b、原型属性共享1、原型链继承12345678910111213function Person(name = &amp;apos;xiaoming&amp;apos;) &amp;#123;	this.name = name;	this.shose = [&amp;apos;nike&amp;apos;, &amp;apos;puma&amp;apos;, &amp;apos;vans&amp;apos;];&amp;#125;Person.p">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/前端"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#原则："><span class="toc-text">原则：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#a、构造函数引用属性不共享"><span class="toc-text">a、构造函数引用属性不共享</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#b、原型属性共享"><span class="toc-text">b、原型属性共享</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#1、原型链继承"><span class="toc-text">1、原型链继承</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2、构造函数"><span class="toc-text">2、构造函数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3、构造函数-原型链"><span class="toc-text">3、构造函数+原型链</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4、计生组合"><span class="toc-text">4、计生组合</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-再次理解继承-1" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">再次理解继承</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.08.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Alin</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://www.zhengzejing.top/2018/08/02/再次理解继承-1/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h6 id="原则："><a href="#原则：" class="headerlink" title="原则："></a>原则：</h6><h6 id="a、构造函数引用属性不共享"><a href="#a、构造函数引用属性不共享" class="headerlink" title="a、构造函数引用属性不共享"></a>a、构造函数引用属性不共享</h6><h6 id="b、原型属性共享"><a href="#b、原型属性共享" class="headerlink" title="b、原型属性共享"></a>b、原型属性共享</h6><h6 id="1、原型链继承"><a href="#1、原型链继承" class="headerlink" title="1、原型链继承"></a>1、原型链继承</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function Person(name = &apos;xiaoming&apos;) &#123;</span><br><span class="line">	this.name = name;</span><br><span class="line">	this.shose = [&apos;nike&apos;, &apos;puma&apos;, &apos;vans&apos;];</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.run = function() &#123;</span><br><span class="line">	console.log(`$&#123;this.name&#125; is running...`);</span><br><span class="line">&#125;</span><br><span class="line">function Student(age = 20) &#123;</span><br><span class="line">	this.age = age;</span><br><span class="line">&#125;</span><br><span class="line">Student.prototype = new Person();</span><br><span class="line">var s = new Student();</span><br><span class="line">var s1 = new Student();</span><br></pre></td></tr></table></figure>
+<p>优点：都继承了构造属性和原型属性<br>缺点：但是构造引用属性存在共享问题</p>
+<h6 id="2、构造函数"><a href="#2、构造函数" class="headerlink" title="2、构造函数"></a>2、构造函数</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function Person(name = &apos;xiaoming&apos;) &#123;</span><br><span class="line">	this.name = name;</span><br><span class="line">	this.shose = [&apos;nike&apos;, &apos;puma&apos;, &apos;vans&apos;];</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.run = function() &#123;</span><br><span class="line">	console.log(`$&#123;this.name&#125; is running...`);</span><br><span class="line">&#125;</span><br><span class="line">function Student(age = 20) &#123;</span><br><span class="line">	Person.call(this);</span><br><span class="line">	this.age = age;</span><br><span class="line">&#125;</span><br><span class="line">var s = new Student();</span><br><span class="line">var s1 = new Student();</span><br></pre></td></tr></table></figure>
+<p>优点：构造引用属性不存在共享问题<br>缺点：原型属性没有得到继承</p>
+<h6 id="3、构造函数-原型链"><a href="#3、构造函数-原型链" class="headerlink" title="3、构造函数+原型链"></a>3、构造函数+原型链</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function Person(name = &apos;xiaoming&apos;) &#123;</span><br><span class="line">	this.name = name;</span><br><span class="line">	this.shose = [&apos;nike&apos;, &apos;puma&apos;, &apos;vans&apos;];</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.run = function() &#123;</span><br><span class="line">	console.log(`$&#123;this.name&#125; is running...`);</span><br><span class="line">&#125;</span><br><span class="line">function Student(age = 20) &#123;</span><br><span class="line">	Person.call(this);</span><br><span class="line">	this.age = age;</span><br><span class="line">&#125;</span><br><span class="line">Student.prototype = new Person();</span><br><span class="line">var s = new Student();</span><br><span class="line">var s1 = new Student();</span><br></pre></td></tr></table></figure>
+<p>优点：构造引用属性不共享，原型方法也能继承<br>缺点：构造属性重复，子类实例和原型都存在构造属性，占空间</p>
+<h6 id="4、计生组合"><a href="#4、计生组合" class="headerlink" title="4、计生组合"></a>4、计生组合</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function Person(name = &apos;xiaoming&apos;) &#123;</span><br><span class="line">	this.name = name;</span><br><span class="line">	this.shose = [&apos;nike&apos;, &apos;puma&apos;, &apos;vans&apos;];</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.run = function() &#123;</span><br><span class="line">	console.log(`$&#123;this.name&#125; is running...`);</span><br><span class="line">&#125;</span><br><span class="line">function Student(age = 20) &#123;</span><br><span class="line">	Person.call(this);</span><br><span class="line">	this.age = age;</span><br><span class="line">&#125;</span><br><span class="line">function create(o) &#123;</span><br><span class="line">	function F()&#123;&#125;;</span><br><span class="line">	F.prototype = o;</span><br><span class="line">	return new F();</span><br><span class="line">&#125;</span><br><span class="line">Student.prototype = create(Person.prototype);</span><br><span class="line">var s = new Student();</span><br><span class="line">var s1 = new Student();</span><br></pre></td></tr></table></figure>
+<p>优点：构造引用属性不共享，原型方法也能继承，构造属性不重复<br>缺点：无<br>备注：上面的create()方法其实就是Object.create()方法的实现，最后，请按照代码顺序画出内存空间的变化！</p>
+
+    
+  </div>
+
+  
+      <div class="git"></div>
+  
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持 Alin</div>
+        <ul>
+        
+          <li class="item">
+            <span>微信扫一扫</span>
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <span>支付宝扫一扫</span>
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/02/递归理解/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/前端"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/08/02/再次理解继承-1/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
