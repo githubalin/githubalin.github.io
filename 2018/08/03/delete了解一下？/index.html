@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>判断继承属性 | Alin - a water coder</title>
+  <title>delete了解一下？ | Alin - a water coder</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,17 +15,17 @@
     <meta name="keywords" content="alin,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
   
 
-  <meta name="description" content="//  利用in和hasOwnProperty方法判断属性是否继承而来123456function isInherit(o, prop) &amp;#123;	if(prop in o &amp;amp;&amp;amp; !o.hasOwnProperty(prop)) &amp;#123;		return true	&amp;#125;	return false;&amp;#125;">
+  <meta name="description" content="delete操作符用来删除对象属性，但是只是将属性和宿主断开联系，属性还是没有被销毁：12345678var o = &amp;#123;  a: &amp;#123;    b: 1  &amp;#125;&amp;#125;var x = o.a; //  将o的属性a保存在x中delete o.a; //  断开o和a的联系，但是a没有被销毁console.log(x.b); //  1 这样可能存在内存泄漏 JavaSc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="判断继承属性">
-<meta property="og:url" content="http://yoursite.com/2018/08/03/判断继承属性/index.html">
+<meta property="og:title" content="delete了解一下？">
+<meta property="og:url" content="http://yoursite.com/2018/08/03/delete了解一下？/index.html">
 <meta property="og:site_name" content="Alin - a water coder">
-<meta property="og:description" content="//  利用in和hasOwnProperty方法判断属性是否继承而来123456function isInherit(o, prop) &amp;#123;	if(prop in o &amp;amp;&amp;amp; !o.hasOwnProperty(prop)) &amp;#123;		return true	&amp;#125;	return false;&amp;#125;">
+<meta property="og:description" content="delete操作符用来删除对象属性，但是只是将属性和宿主断开联系，属性还是没有被销毁：12345678var o = &amp;#123;  a: &amp;#123;    b: 1  &amp;#125;&amp;#125;var x = o.a; //  将o的属性a保存在x中delete o.a; //  断开o和a的联系，但是a没有被销毁console.log(x.b); //  1 这样可能存在内存泄漏 JavaSc">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-03T07:21:50.420Z">
+<meta property="og:updated_time" content="2018-08-03T07:29:39.766Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="判断继承属性">
-<meta name="twitter:description" content="//  利用in和hasOwnProperty方法判断属性是否继承而来123456function isInherit(o, prop) &amp;#123;	if(prop in o &amp;amp;&amp;amp; !o.hasOwnProperty(prop)) &amp;#123;		return true	&amp;#125;	return false;&amp;#125;">
+<meta name="twitter:title" content="delete了解一下？">
+<meta name="twitter:description" content="delete操作符用来删除对象属性，但是只是将属性和宿主断开联系，属性还是没有被销毁：12345678var o = &amp;#123;  a: &amp;#123;    b: 1  &amp;#125;&amp;#125;var x = o.a; //  将o的属性a保存在x中delete o.a; //  断开o和a的联系，但是a没有被销毁console.log(x.b); //  1 这样可能存在内存泄漏 JavaSc">
 
   
 
@@ -152,9 +152,9 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-判断继承属性" class="article article-type-post" itemprop="blogPost">
+   <article id="post-delete了解一下？" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">判断继承属性</h1>
+    <h1 class="post-title">delete了解一下？</h1>
 
     <div class="article-meta">
       <span>
@@ -175,7 +175,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://www.zhengzejing.top/2018/08/03/判断继承属性/#disqus_thread"></a>
+          <a href="https://www.zhengzejing.top/2018/08/03/delete了解一下？/#disqus_thread"></a>
         </span>
       
 
@@ -192,7 +192,11 @@
 
   <div class="article-content">
     
-      <p>//  利用in和hasOwnProperty方法判断属性是否继承而来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function isInherit(o, prop) &#123;</span><br><span class="line">	if(prop in o &amp;&amp; !o.hasOwnProperty(prop)) &#123;</span><br><span class="line">		return true</span><br><span class="line">	&#125;</span><br><span class="line">	return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+      <p><strong>delete操作符用来删除对象属性，但是只是将属性和宿主断开联系，属性还是没有被销毁：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var o = &#123;</span><br><span class="line">  a: &#123;</span><br><span class="line">    b: 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var x = o.a; //  将o的属性a保存在x中</span><br><span class="line">delete o.a; //  断开o和a的联系，但是a没有被销毁</span><br><span class="line">console.log(x.b); //  1</span><br></pre></td></tr></table></figure></p>
+<p>这样可能存在内存泄漏</p>
+<p><strong>JavaScript权威指南</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">delete 返回删除结果</span><br><span class="line">true：成功删除或者没有意义的删除</span><br><span class="line">var o = &#123;</span><br><span class="line">	a: 1</span><br><span class="line">&#125;</span><br><span class="line">delete o.a; //  true</span><br><span class="line">delete o.b; //  true 没有意义的删除</span><br><span class="line">delete 1; // true 没有意义的删除</span><br><span class="line">delete o.toString; //  toString方法是继承自Object.prototype，删除不了，是没有意义的删除，true</span><br></pre></td></tr></table></figure></p>
+<p><strong>什么情况下 返回false呢：</strong><br>false：尝试删除不可配置的属性，或者全局变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">delete Object.prototype; //  false Object.prototype是不可配置属性</span><br><span class="line">var a = 1;</span><br><span class="line">delete this.a; //  不能删除全局变量</span><br><span class="line">function b() &#123;&#125;</span><br><span class="line">delete this.b; //  不能删除全局函数</span><br></pre></td></tr></table></figure></p>
+<p>但是，如果显示用this声明，全局变量或者函数将可以被删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">this.x = 1;</span><br><span class="line">delete x; //  true</span><br></pre></td></tr></table></figure></p>
 
     
   </div>
@@ -230,10 +234,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/08/03/实现Object-keys/">
+    <a class="show pull-left" href="/2018/08/03/判断继承属性/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/08/03/delete了解一下？/">
+    <a class="show pull-right" href="/2018/08/03/短路/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -325,7 +329,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2018/08/03/判断继承属性/';
+    var disqus_url = 'http://yoursite.com/2018/08/03/delete了解一下？/';
     
     (function(){
       var dsq = document.createElement('script');
