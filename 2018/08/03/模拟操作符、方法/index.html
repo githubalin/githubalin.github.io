@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>终极原型链图 | Alin - a water coder</title>
+  <title>模拟操作符、方法 | Alin - a water coder</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,17 +15,18 @@
     <meta name="keywords" content="JavaScript," />
   
 
-  <meta name="keywords" content="JavaScript">
+  <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445// 模拟instanceoffunction myInstanceof(left, right) &amp;#123;  var _prototype = right.prototype;  var _proto = left.__proto_">
+<meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="终极原型链图">
-<meta property="og:url" content="http://yoursite.com/2018/08/03/终极原型链图/index.html">
+<meta property="og:title" content="模拟操作符、方法">
+<meta property="og:url" content="http://yoursite.com/2018/08/03/模拟操作符、方法/index.html">
 <meta property="og:site_name" content="Alin - a water coder">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445// 模拟instanceoffunction myInstanceof(left, right) &amp;#123;  var _prototype = right.prototype;  var _proto = left.__proto_">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/prototype.png?raw=true">
-<meta property="og:updated_time" content="2018-08-03T08:06:35.216Z">
+<meta property="og:updated_time" content="2018-08-03T08:24:34.884Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="终极原型链图">
-<meta name="twitter:image" content="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/prototype.png?raw=true">
+<meta name="twitter:title" content="模拟操作符、方法">
+<meta name="twitter:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445// 模拟instanceoffunction myInstanceof(left, right) &amp;#123;  var _prototype = right.prototype;  var _proto = left.__proto_">
 
   
 
@@ -152,9 +153,9 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-终极原型链图" class="article article-type-post" itemprop="blogPost">
+   <article id="post-模拟操作符、方法" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">终极原型链图</h1>
+    <h1 class="post-title">模拟操作符、方法</h1>
 
     <div class="article-meta">
       <span>
@@ -180,7 +181,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://www.zhengzejing.top/2018/08/03/终极原型链图/#disqus_thread"></a>
+          <a href="https://www.zhengzejing.top/2018/08/03/模拟操作符、方法/#disqus_thread"></a>
         </span>
       
 
@@ -197,7 +198,7 @@
 
   <div class="article-content">
     
-      <div style="display: flex; justify-content: center; align-items: center; background: #666; padding: 50px 0;"><br><img src="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/prototype.png?raw=true" alt="原型链图"><br></div>
+      <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">// 模拟instanceof</span><br><span class="line">function myInstanceof(left, right) &#123;</span><br><span class="line">  var _prototype = right.prototype;</span><br><span class="line">  var _proto = left.__proto__;</span><br><span class="line">  while(true) &#123;</span><br><span class="line">    if(_proto === null) return false;</span><br><span class="line">    if(_proto === _prototype) return true;</span><br><span class="line">    _proto = _proto.__proto__;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 模拟new</span><br><span class="line">function myNew(Constr) &#123;</span><br><span class="line">  var obj = new Object();</span><br><span class="line">  obj.__proto__ = Constr.prototype;</span><br><span class="line">  var res = Constr.apply(obj, [...arguments].slice(1));</span><br><span class="line">  if((&#123;&#125;).toString.call(res) === &apos;[object Object]&apos;) return res;</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 模拟apply</span><br><span class="line">Function.prototype.myApply = function(context = window) &#123;</span><br><span class="line">  context.f = this;</span><br><span class="line">  var res = context.f(...arguments[1]);</span><br><span class="line">  delete context.f;</span><br><span class="line">  return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 模拟call</span><br><span class="line">Function.prototype.myCall = function(context = window) &#123;</span><br><span class="line">  context.f = this;</span><br><span class="line">  var res = context.f(...[...arguments].slice(1));</span><br><span class="line">  delete context.f;</span><br><span class="line">  return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 模拟bind</span><br><span class="line">Function.prototype.myBind = function(context) &#123;</span><br><span class="line">  var outerArgs = [...arguments].slice(1);</span><br><span class="line">  var f = this;</span><br><span class="line">  return function () &#123;</span><br><span class="line">    var args = outerArgs.concat([...arguments].slice());</span><br><span class="line">    f.apply(context, args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     
   </div>
 
@@ -234,10 +235,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/08/03/获取url参数/">
+    <a class="show pull-left" href="/2018/08/03/终极原型链图/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/08/03/模拟操作符、方法/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -329,7 +330,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2018/08/03/终极原型链图/';
+    var disqus_url = 'http://yoursite.com/2018/08/03/模拟操作符、方法/';
     
     (function(){
       var dsq = document.createElement('script');
