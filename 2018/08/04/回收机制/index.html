@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>只让用户输入数字 | Alin - a water coder</title>
+  <title>回收机制 | Alin - a water coder</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,17 +15,19 @@
     <meta name="keywords" content="alin,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
   
 
-  <meta name="description" content="keydown, keypress, keyup三者的区别： 1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进 控件后触发的，在回调中获得到 的是 新的值顺序是：keydown\keypress\keyup 2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健3、如果要阻止用">
+  <meta name="description" content="先要知道JavaScript垃圾回收两个要点： a、回收是回收的，比如10s回收一次b、行垃圾回收回收的是内存，内存由变量和函数占用JavaScript中有两种垃圾回收方式1、标志清除说到标志清除垃圾回收，就要知道执行环境和执行流，当一个脚本在浏览器中跑，就有一个执行流，由于有函数的存在，因此全局执行环境中有很多的局部执行环境，而每一个执行环境都有一个对应的变量对象。当执行流进入某个执行环境，会将">
 <meta property="og:type" content="article">
-<meta property="og:title" content="只让用户输入数字">
-<meta property="og:url" content="http://yoursite.com/2018/08/03/只让用户输入数字/index.html">
+<meta property="og:title" content="回收机制">
+<meta property="og:url" content="http://yoursite.com/2018/08/04/回收机制/index.html">
 <meta property="og:site_name" content="Alin - a water coder">
-<meta property="og:description" content="keydown, keypress, keyup三者的区别： 1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进 控件后触发的，在回调中获得到 的是 新的值顺序是：keydown\keypress\keyup 2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健3、如果要阻止用">
+<meta property="og:description" content="先要知道JavaScript垃圾回收两个要点： a、回收是回收的，比如10s回收一次b、行垃圾回收回收的是内存，内存由变量和函数占用JavaScript中有两种垃圾回收方式1、标志清除说到标志清除垃圾回收，就要知道执行环境和执行流，当一个脚本在浏览器中跑，就有一个执行流，由于有函数的存在，因此全局执行环境中有很多的局部执行环境，而每一个执行环境都有一个对应的变量对象。当执行流进入某个执行环境，会将">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-03T16:02:38.941Z">
+<meta property="og:image" content="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/prototype.png?raw=true">
+<meta property="og:updated_time" content="2018-08-03T16:13:57.938Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="只让用户输入数字">
-<meta name="twitter:description" content="keydown, keypress, keyup三者的区别： 1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进 控件后触发的，在回调中获得到 的是 新的值顺序是：keydown\keypress\keyup 2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健3、如果要阻止用">
+<meta name="twitter:title" content="回收机制">
+<meta name="twitter:description" content="先要知道JavaScript垃圾回收两个要点： a、回收是回收的，比如10s回收一次b、行垃圾回收回收的是内存，内存由变量和函数占用JavaScript中有两种垃圾回收方式1、标志清除说到标志清除垃圾回收，就要知道执行环境和执行流，当一个脚本在浏览器中跑，就有一个执行流，由于有函数的存在，因此全局执行环境中有很多的局部执行环境，而每一个执行环境都有一个对应的变量对象。当执行流进入某个执行环境，会将">
+<meta name="twitter:image" content="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/prototype.png?raw=true">
 
   
 
@@ -151,20 +153,20 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进-控件后触发的，在回调中获得到-的是-新的值"><span class="toc-text">1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进 控件后触发的，在回调中获得到 的是 新的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健"><span class="toc-text">2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、如果要阻止用户输入，不能在keyup回调里览器默认行为已经完成（将输入的值设到控件中）面，此时浏"><span class="toc-text">3、如果要阻止用户输入，不能在keyup回调里览器默认行为已经完成（将输入的值设到控件中）面，此时浏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方式一"><span class="toc-text">方式一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方式二"><span class="toc-text">方式二</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#a、回收是回收的，比如10s回收一次"><span class="toc-text">a、回收是回收的，比如10s回收一次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b、行垃圾回收回收的是内存，内存由变量和函数占用"><span class="toc-text">b、行垃圾回收回收的是内存，内存由变量和函数占用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript中有两种垃圾回收方式"><span class="toc-text">JavaScript中有两种垃圾回收方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、标志清除"><span class="toc-text">1、标志清除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、引用计数"><span class="toc-text">2、引用计数</span></a></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-只让用户输入数字" class="article article-type-post" itemprop="blogPost">
+   <article id="post-回收机制" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">只让用户输入数字</h1>
+    <h1 class="post-title">回收机制</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2018.08.03</span>
+        <span>2018.08.04</span>
       </span>
 
       
@@ -180,7 +182,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://www.zhengzejing.top/2018/08/03/只让用户输入数字/#disqus_thread"></a>
+          <a href="https://www.zhengzejing.top/2018/08/04/回收机制/#disqus_thread"></a>
         </span>
       
 
@@ -197,10 +199,14 @@
 
   <div class="article-content">
     
-      <p><em>keydown, keypress, keyup</em><br>三者的区别：</p>
-<h3 id="1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进-控件后触发的，在回调中获得到-的是-新的值"><a href="#1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进-控件后触发的，在回调中获得到-的是-新的值" class="headerlink" title="1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进 控件后触发的，在回调中获得到 的是 新的值"></a>1、keydown和keypress是在字符进入字符串前触发的，在回调中得到的是原来的值，keyup是在字符设进 控件后触发的，在回调中获得到 的是 新的值</h3><p>顺序是：keydown\keypress\keyup</p>
-<h3 id="2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健"><a href="#2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健" class="headerlink" title="2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健"></a>2、keypress不能相应中文，不能相应backspace、delete、shift、ctrl、alt之类的健</h3><h3 id="3、如果要阻止用户输入，不能在keyup回调里览器默认行为已经完成（将输入的值设到控件中）面，此时浏"><a href="#3、如果要阻止用户输入，不能在keyup回调里览器默认行为已经完成（将输入的值设到控件中）面，此时浏" class="headerlink" title="3、如果要阻止用户输入，不能在keyup回调里览器默认行为已经完成（将输入的值设到控件中）面，此时浏"></a>3、如果要阻止用户输入，不能在keyup回调里览器默认行为已经完成（将输入的值设到控件中）面，此时浏</h3><h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var input = document.querySelector(&apos;#ipt&apos;);</span><br><span class="line">input.addEventListener(&apos;keypress&apos;, function(e) &#123;</span><br><span class="line">	var pressVal = e.key;</span><br><span class="line">	var reg = /\d/g;</span><br><span class="line">	if(!reg.test(pressVal)) &#123;</span><br><span class="line">		e.preventDefault();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;, false);</span><br></pre></td></tr></table></figure>
-<h3 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">inputEle.addEventListener(&apos;keyup&apos;, function(e) &#123;</span><br><span class="line">this.value = this.value.replace(/\D/g, &apos;&apos;);</span><br><span class="line">&#125;, false);</span><br></pre></td></tr></table></figure>
+      <p><em>先要知道JavaScript垃圾回收两个要点：</em></p>
+<h3 id="a、回收是回收的，比如10s回收一次"><a href="#a、回收是回收的，比如10s回收一次" class="headerlink" title="a、回收是回收的，比如10s回收一次"></a>a、回收是回收的，比如10s回收一次</h3><h3 id="b、行垃圾回收回收的是内存，内存由变量和函数占用"><a href="#b、行垃圾回收回收的是内存，内存由变量和函数占用" class="headerlink" title="b、行垃圾回收回收的是内存，内存由变量和函数占用"></a>b、行垃圾回收回收的是内存，内存由变量和函数占用</h3><h2 id="JavaScript中有两种垃圾回收方式"><a href="#JavaScript中有两种垃圾回收方式" class="headerlink" title="JavaScript中有两种垃圾回收方式"></a>JavaScript中有两种垃圾回收方式</h2><h3 id="1、标志清除"><a href="#1、标志清除" class="headerlink" title="1、标志清除"></a>1、标志清除</h3><p>说到标志清除垃圾回收，就要知道执行环境和执行流，当一个脚本在浏览器中跑，就有一个执行流，由于有函数的存在，因此全局执行环境中有很多的局部执行环境，而每一个执行环境都有一个对应的变量对象。当执行流进入某个执行环境，会将环境中变量对象（包含了该环境的变量和函数）的变量和函数回收标志置为false（不可回收）。当执行流离开执行环境时，将改环境中变量对象的变量和函数和回收标志置为true（可以回收）。接着，垃圾收集器下一次回收垃圾的时候，就将回收标志为true的变量后者函数从内存中清除掉，达到回收效果。</p>
+<h3 id="2、引用计数"><a href="#2、引用计数" class="headerlink" title="2、引用计数"></a>2、引用计数</h3><p>当一个变量被赋值，或者被引用，该值的引用变量+1，相反，如果包含对这个值引用的变量又取得了另一个值，那么这个值的引用次数-1。当这个值的次数为0，说明没有机会引用到该值了，垃圾收集器下次回收垃圾就可以将他回收。但是，如果存在循环引用，那么该回收方式将又问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = new Object();</span><br><span class="line">var obj2 = new Object();</span><br><span class="line">obj1.someObj = obj2;</span><br><span class="line">obj2.someObj = obj1;</span><br></pre></td></tr></table></figure></p>
+<p><div><br>     <img src="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/prototype.png?raw=true" alt="循环引用结果"></div></p>
+<p><div><br>上面就存在循环引用，如果浏览器采用引用技术来回收垃圾，那么 obj1和obj2永远得不到回收，存在内存泄漏！</div></p>
+<p>垃圾回收设计性能问题，垃圾收集器多久收集一次？太频繁，性能下降，太久，垃圾（不会被引用到的内存）得不到及时回收</p>
+<p>可以手动置空<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = new Object();</span><br><span class="line">obj1.name = &apos;zhengzejing&apos;;</span><br><span class="line">console.log(obj1.name);</span><br><span class="line">obj1 = null; // 手动值空，垃圾收集器下一次回收垃圾会将obj1回收掉</span><br></pre></td></tr></table></figure></p>
+
     
   </div>
 
@@ -237,10 +243,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/08/03/实现网站粘贴添加信息/">
+    <a class="show pull-left" href="/2018/08/03/只让用户输入数字/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/08/04/回收机制/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -332,7 +338,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2018/08/03/只让用户输入数字/';
+    var disqus_url = 'http://yoursite.com/2018/08/04/回收机制/';
     
     (function(){
       var dsq = document.createElement('script');
