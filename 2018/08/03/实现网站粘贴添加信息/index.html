@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>instanceof vs isPrototypeOf | Alin - a water coder</title>
+  <title>实现网站粘贴添加信息 | Alin - a water coder</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,18 +15,18 @@
     <meta name="keywords" content="JavaScript," />
   
 
-  <meta name="description" content="instanceof 和 isPrototypeOf都可以判断一个对象的原型链是否包含了某个原型，作用类似，用法不一样而已：1234var Person = function() &amp;#123;&amp;#125;;var person = new Person();console.log(perosn instanceof Perosn); // trueconsole.log(Person.protot">
+  <meta name="description" content="1234567window.addEventListener(&amp;apos;copy&amp;apos;, handler, false);function handler(e) &amp;#123;	var selText = window.getSelection().toString();	e.clipboardData.setData(&amp;apos;text/plain&amp;apos;, selText + &amp;a">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="instanceof vs isPrototypeOf">
-<meta property="og:url" content="http://yoursite.com/2018/08/03/instanceof-vs-isPrototypeOf/index.html">
+<meta property="og:title" content="实现网站粘贴添加信息">
+<meta property="og:url" content="http://yoursite.com/2018/08/03/实现网站粘贴添加信息/index.html">
 <meta property="og:site_name" content="Alin - a water coder">
-<meta property="og:description" content="instanceof 和 isPrototypeOf都可以判断一个对象的原型链是否包含了某个原型，作用类似，用法不一样而已：1234var Person = function() &amp;#123;&amp;#125;;var person = new Person();console.log(perosn instanceof Perosn); // trueconsole.log(Person.protot">
+<meta property="og:description" content="1234567window.addEventListener(&amp;apos;copy&amp;apos;, handler, false);function handler(e) &amp;#123;	var selText = window.getSelection().toString();	e.clipboardData.setData(&amp;apos;text/plain&amp;apos;, selText + &amp;a">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-03T09:01:04.547Z">
+<meta property="og:updated_time" content="2018-08-03T12:24:20.791Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="instanceof vs isPrototypeOf">
-<meta name="twitter:description" content="instanceof 和 isPrototypeOf都可以判断一个对象的原型链是否包含了某个原型，作用类似，用法不一样而已：1234var Person = function() &amp;#123;&amp;#125;;var person = new Person();console.log(perosn instanceof Perosn); // trueconsole.log(Person.protot">
+<meta name="twitter:title" content="实现网站粘贴添加信息">
+<meta name="twitter:description" content="1234567window.addEventListener(&amp;apos;copy&amp;apos;, handler, false);function handler(e) &amp;#123;	var selText = window.getSelection().toString();	e.clipboardData.setData(&amp;apos;text/plain&amp;apos;, selText + &amp;a">
 
   
 
@@ -153,9 +153,9 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-instanceof-vs-isPrototypeOf" class="article article-type-post" itemprop="blogPost">
+   <article id="post-实现网站粘贴添加信息" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">instanceof vs isPrototypeOf</h1>
+    <h1 class="post-title">实现网站粘贴添加信息</h1>
 
     <div class="article-meta">
       <span>
@@ -181,7 +181,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://www.zhengzejing.top/2018/08/03/instanceof-vs-isPrototypeOf/#disqus_thread"></a>
+          <a href="https://www.zhengzejing.top/2018/08/03/实现网站粘贴添加信息/#disqus_thread"></a>
         </span>
       
 
@@ -198,14 +198,8 @@
 
   <div class="article-content">
     
-      <p><code>instanceof</code> 和 <code>isPrototypeOf</code>都可以判断一个对象的原型链是否包含了某个原型，作用类似，用法不一样而已：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var Person = function() &#123;&#125;;</span><br><span class="line">var person = new Person();</span><br><span class="line">console.log(perosn instanceof Perosn); // true</span><br><span class="line">console.log(Person.prototype.isPrototypeOf(person)); // true</span><br></pre></td></tr></table></figure></p>
-<p>模式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">instanceof A instanceof B // A是实例，B是构造函数</span><br><span class="line">A.isPrototypeOf(B); // A是原型，B是实例</span><br></pre></td></tr></table></figure></p>
-<p>原理一样：都是在实例的隐形原型链找原型对象，存在返回true</p>
-<p>不一样的一点，若没有构造函数呢？此时的<code>instanceof</code>将不能使用，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;;</span><br><span class="line">var copy = Object.create(obj);</span><br><span class="line">obj.isPrototypeOf(copy); // true</span><br><span class="line">copy instanceof obj; // 报错 ，此时的obj就是原型了，不是构造函数，obj =&gt; B.prototype</span><br></pre></td></tr></table></figure></p>
-<p>在此种情况下 ，只能用<code>isPrototypeOf</code></p>
-<p><a href="https://stackoverflow.com/questions/18343545/javascript-isprototypeof-vs-instanceof-usage?utm_medium=organic&amp;utm_source=google_rich_qa&amp;utm_campaign=google_rich_qa" target="_blank" rel="noopener">参考链接</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 可看可不看</span><br><span class="line">// 重写Object.create方法</span><br><span class="line">Object.create = function(o) &#123;</span><br><span class="line">  var F = function() &#123;</span><br><span class="line">    var f = arguments.callee;</span><br><span class="line">    this.getConstructor = function() &#123;</span><br><span class="line">      return f;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  F.prototype = o;</span><br><span class="line">  F.prototype.constructor = F;</span><br><span class="line">  return new F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此时有 <code>copy instanceof copy.getConstructor(); // true</code></p>
+      <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&apos;copy&apos;, handler, false);</span><br><span class="line">function handler(e) &#123;</span><br><span class="line">	var selText = window.getSelection().toString();</span><br><span class="line">	e.clipboardData.setData(&apos;text/plain&apos;, selText + &apos;\nby zhengzejing&apos;);</span><br><span class="line">	e.preventDefault();</span><br><span class="line">	window.removeEventListener(&apos;copy&apos;, arguments.callee);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/36270886/event-clipboarddata-setdata-in-copy-event" target="_blank" rel="noopener">refer</a></p>
 
     
   </div>
@@ -243,10 +237,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/08/03/call、apply调用/">
+    <a class="show pull-left" href="/2018/08/03/instanceof-vs-isPrototypeOf/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/08/03/实现网站粘贴添加信息/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -338,7 +332,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2018/08/03/instanceof-vs-isPrototypeOf/';
+    var disqus_url = 'http://yoursite.com/2018/08/03/实现网站粘贴添加信息/';
     
     (function(){
       var dsq = document.createElement('script');
