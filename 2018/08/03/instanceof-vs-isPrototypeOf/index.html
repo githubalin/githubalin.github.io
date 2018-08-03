@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>call、apply调用 | Alin - a water coder</title>
+  <title>instanceof vs isPrototypeOf | Alin - a water coder</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,18 +15,18 @@
     <meta name="keywords" content="JavaScript," />
   
 
-  <meta name="description" content="一般用Object.prototype.toString.call();判断对象类型如：123Object.prototype.toString.call(Array); //  [object Function]Object.prototype.toString.call(Array.prototype); // [object Array]Object.prototype.toString.c">
+  <meta name="description" content="instanceof 和 isPrototypeOf都可以判断一个对象的原型链是否包含了某个原型，作用类似，用法不一样而已：1234var Person = function() &amp;#123;&amp;#125;;var person = new Person();console.log(perosn instanceof Perosn); // trueconsole.log(Person.protot">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="call、apply调用">
-<meta property="og:url" content="http://yoursite.com/2018/08/03/call、apply调用/index.html">
+<meta property="og:title" content="instanceof vs isPrototypeOf">
+<meta property="og:url" content="http://yoursite.com/2018/08/03/instanceof-vs-isPrototypeOf/index.html">
 <meta property="og:site_name" content="Alin - a water coder">
-<meta property="og:description" content="一般用Object.prototype.toString.call();判断对象类型如：123Object.prototype.toString.call(Array); //  [object Function]Object.prototype.toString.call(Array.prototype); // [object Array]Object.prototype.toString.c">
+<meta property="og:description" content="instanceof 和 isPrototypeOf都可以判断一个对象的原型链是否包含了某个原型，作用类似，用法不一样而已：1234var Person = function() &amp;#123;&amp;#125;;var person = new Person();console.log(perosn instanceof Perosn); // trueconsole.log(Person.protot">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-03T08:55:22.350Z">
+<meta property="og:updated_time" content="2018-08-03T09:01:04.547Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="call、apply调用">
-<meta name="twitter:description" content="一般用Object.prototype.toString.call();判断对象类型如：123Object.prototype.toString.call(Array); //  [object Function]Object.prototype.toString.call(Array.prototype); // [object Array]Object.prototype.toString.c">
+<meta name="twitter:title" content="instanceof vs isPrototypeOf">
+<meta name="twitter:description" content="instanceof 和 isPrototypeOf都可以判断一个对象的原型链是否包含了某个原型，作用类似，用法不一样而已：1234var Person = function() &amp;#123;&amp;#125;;var person = new Person();console.log(perosn instanceof Perosn); // trueconsole.log(Person.protot">
 
   
 
@@ -153,9 +153,9 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-call、apply调用" class="article article-type-post" itemprop="blogPost">
+   <article id="post-instanceof-vs-isPrototypeOf" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">call、apply调用</h1>
+    <h1 class="post-title">instanceof vs isPrototypeOf</h1>
 
     <div class="article-meta">
       <span>
@@ -181,7 +181,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://www.zhengzejing.top/2018/08/03/call、apply调用/#disqus_thread"></a>
+          <a href="https://www.zhengzejing.top/2018/08/03/instanceof-vs-isPrototypeOf/#disqus_thread"></a>
         </span>
       
 
@@ -198,11 +198,14 @@
 
   <div class="article-content">
     
-      <p>一般用<code>Object.prototype.toString.call();</code>判断对象类型<br>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object.prototype.toString.call(Array); //  [object Function]</span><br><span class="line">Object.prototype.toString.call(Array.prototype); // [object Array]</span><br><span class="line">Object.prototype.toString.call(Array.prototype.__proto__); // [object Object]</span><br></pre></td></tr></table></figure></p>
-<p>我们可以用：<br>({})替代<code>Object.prototype</code>,因为<br><code>({}).toString === Object.prototype.toString</code>，对象的<code>toString</code>方法是从<code>Object.prototype</code>上面继承的<br>故有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&#123;&#125;).toString.call(Array) // [object Function]</span><br></pre></td></tr></table></figure></p>
-<p>少写了很多，类似的，数组的原型方法，<code>Array.prototype</code>，如<code>forEach，map，slice</code>…等等<br>修改之前：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.forEach.call(&apos;123&apos;, item =&gt; &#123;</span><br><span class="line">	console.log(item);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>以上分别打印出1， 2， 3<br>由于 ：<code>[].forEach === Array.prototype.forEach</code><br>故有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[].forEach(&apos;123&apos;, item =&gt; &#123;</span><br><span class="line">	console.log(item);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>效果一样<br>这种一般用在类数组的变量上，如函数的内置变量<code>arguments</code>，不是一个数组，但是是一个类数组变量，有length，如果直接遍历，只能用for循环之类的，我们可以借助，<code>Array.prototype.forEach</code>方法，调用时候会将<code>arguments</code>自动转成数组，在调用forEach方法，其实可以理解成为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Array.From(arguments).forEarch(item =&gt; &#123;</span><br><span class="line">console.log(item);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+      <p><code>instanceof</code> 和 <code>isPrototypeOf</code>都可以判断一个对象的原型链是否包含了某个原型，作用类似，用法不一样而已：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var Person = function() &#123;&#125;;</span><br><span class="line">var person = new Person();</span><br><span class="line">console.log(perosn instanceof Perosn); // true</span><br><span class="line">console.log(Person.prototype.isPrototypeOf(person)); // true</span><br></pre></td></tr></table></figure></p>
+<p>模式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">instanceof A instanceof B // A是实例，B是构造函数</span><br><span class="line">A.isPrototypeOf(B); // A是原型，B是实例</span><br></pre></td></tr></table></figure></p>
+<p>原理一样：都是在实例的隐形原型链找原型对象，存在返回true</p>
+<p>不一样的一点，若没有构造函数呢？此时的<code>instanceof</code>将不能使用，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;;</span><br><span class="line">var copy = Object.create(obj);</span><br><span class="line">obj.isPrototypeOf(copy); // true</span><br><span class="line">copy instanceof obj; // 报错 ，此时的obj就是原型了，不是构造函数，obj =&gt; B.prototype</span><br></pre></td></tr></table></figure></p>
+<p>在此种情况下 ，只能用<code>isPrototypeOf</code></p>
+<p><a href="https://stackoverflow.com/questions/18343545/javascript-isprototypeof-vs-instanceof-usage?utm_medium=organic&amp;utm_source=google_rich_qa&amp;utm_campaign=google_rich_qa" target="_blank" rel="noopener">参考链接</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 可看可不看</span><br><span class="line">// 重写Object.create方法</span><br><span class="line">Object.create = function(o) &#123;</span><br><span class="line">  var F = function() &#123;</span><br><span class="line">    var f = arguments.callee;</span><br><span class="line">    this.getConstructor = function() &#123;</span><br><span class="line">      return f;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  F.prototype = o;</span><br><span class="line">  F.prototype.constructor = F;</span><br><span class="line">  return new F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时有 <code>copy instanceof copy.getConstructor(); // true</code></p>
 
     
   </div>
@@ -240,10 +243,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/08/03/Promise封装原生ajax/">
+    <a class="show pull-left" href="/2018/08/03/call、apply调用/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/08/03/instanceof-vs-isPrototypeOf/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -335,7 +338,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://yoursite.com/2018/08/03/call、apply调用/';
+    var disqus_url = 'http://yoursite.com/2018/08/03/instanceof-vs-isPrototypeOf/';
     
     (function(){
       var dsq = document.createElement('script');
