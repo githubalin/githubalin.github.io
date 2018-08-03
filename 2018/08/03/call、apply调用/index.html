@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Alin - a water coder">
 <meta property="og:description" content="一般用Object.prototype.toString.call();判断对象类型如：123Object.prototype.toString.call(Array); //  [object Function]Object.prototype.toString.call(Array.prototype); // [object Array]Object.prototype.toString.c">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-03T08:54:28.410Z">
+<meta property="og:updated_time" content="2018-08-03T08:55:22.350Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="call、apply调用">
 <meta name="twitter:description" content="一般用Object.prototype.toString.call();判断对象类型如：123Object.prototype.toString.call(Array); //  [object Function]Object.prototype.toString.call(Array.prototype); // [object Array]Object.prototype.toString.c">
@@ -202,7 +202,7 @@
 <p>我们可以用：<br>({})替代<code>Object.prototype</code>,因为<br><code>({}).toString === Object.prototype.toString</code>，对象的<code>toString</code>方法是从<code>Object.prototype</code>上面继承的<br>故有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&#123;&#125;).toString.call(Array) // [object Function]</span><br></pre></td></tr></table></figure></p>
 <p>少写了很多，类似的，数组的原型方法，<code>Array.prototype</code>，如<code>forEach，map，slice</code>…等等<br>修改之前：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.forEach.call(&apos;123&apos;, item =&gt; &#123;</span><br><span class="line">	console.log(item);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>以上分别打印出1， 2， 3<br>由于 ：<code>[].forEach === Array.prototype.forEach</code><br>故有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[].forEach(&apos;123&apos;, item =&gt; &#123;</span><br><span class="line">	console.log(item);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>效果一样<br>这种一般用在类数组的变量上，如函数的内置变量<code>arguments</code>，不是一个数组，但是是一个类数组变量，有length，如果直接遍历，只能用for循环之类的，我们可以借助，<code>Array.prototype.forEach</code>方法，调用时候会将<code>arguments</code>自动转成数组，在调用forEach方法，其实可以理解成为<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(item);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>效果一样<br>这种一般用在类数组的变量上，如函数的内置变量<code>arguments</code>，不是一个数组，但是是一个类数组变量，有length，如果直接遍历，只能用for循环之类的，我们可以借助，<code>Array.prototype.forEach</code>方法，调用时候会将<code>arguments</code>自动转成数组，在调用forEach方法，其实可以理解成为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Array.From(arguments).forEarch(item =&gt; &#123;</span><br><span class="line">console.log(item);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 
     
   </div>
