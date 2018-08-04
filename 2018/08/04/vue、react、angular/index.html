@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>vue、react(单向数据流、双向数据绑定) | Alin - a water coder</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="alin,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
+  
+
+  <meta name="description" content="单向数据流：react和vue都是单向数据流的，很好理解，数据只能从父组件流向子组件（通过props），还有一种理解，如果是用了状态管理库，理解成view–&amp;gt;store–view，两种情况见下图： ### 1、不用状态管理库store#### （1）p–&amp;gt;c，react和vue都是通过props，数据从父到子#### （2）c–&amp;gt;p，此时数据流是逆向的，即子到父，react还是通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue、react(单向数据流、双向数据绑定)">
+<meta property="og:url" content="http://yoursite.com/2018/08/04/vue、react、angular/index.html">
+<meta property="og:site_name" content="Alin - a water coder">
+<meta property="og:description" content="单向数据流：react和vue都是单向数据流的，很好理解，数据只能从父组件流向子组件（通过props），还有一种理解，如果是用了状态管理库，理解成view–&amp;gt;store–view，两种情况见下图： ### 1、不用状态管理库store#### （1）p–&amp;gt;c，react和vue都是通过props，数据从父到子#### （2）c–&amp;gt;p，此时数据流是逆向的，即子到父，react还是通">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/single-data-flow.png?raw=true">
+<meta property="og:image" content="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/dubble-bind-vue.png?raw=true">
+<meta property="og:image" content="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/dubble-bind-react.png.png?raw=true">
+<meta property="og:updated_time" content="2018-08-04T14:45:36.257Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue、react(单向数据流、双向数据绑定)">
+<meta name="twitter:description" content="单向数据流：react和vue都是单向数据流的，很好理解，数据只能从父组件流向子组件（通过props），还有一种理解，如果是用了状态管理库，理解成view–&amp;gt;store–view，两种情况见下图： ### 1、不用状态管理库store#### （1）p–&amp;gt;c，react和vue都是通过props，数据从父到子#### （2）c–&amp;gt;p，此时数据流是逆向的，即子到父，react还是通">
+<meta name="twitter:image" content="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/single-data-flow.png?raw=true">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/前端"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#单向数据流："><span class="toc-text">单向数据流：</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-vue、react、angular" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">vue、react(单向数据流、双向数据绑定)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.08.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Alin</span>
+        </span>
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://www.zhengzejing.top/2018/08/04/vue、react、angular/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="单向数据流："><a href="#单向数据流：" class="headerlink" title="单向数据流："></a>单向数据流：</h2><p>react和vue都是单向数据流的，很好理解，数据只能从父组件流向子组件（通过props），还有一种理解，如果是用了状态管理库，理解成view–&gt;store–view，两种情况见下图：</p>
+<div style="display: flex; justify-content: center; align-items: center;"><br><img src="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/single-data-flow.png?raw=true" alt="single-data-flow"><br></div><br>### 1、不用状态管理库store<br>#### （1）p–&gt;c，react和vue都是通过props，数据从父到子<br>#### （2）c–&gt;p，此时数据流是逆向的，即子到父，react还是通过props解决，具体是父组件传递一个自身方法作为prop给子组件，子组件内部调用该方法并传参，打到子到父的通信。而vue不是通过prop的方式进行子到父的通信，是通过发布订阅（观察者）模式，在父组件中订阅(on)某个事件，在子组件中触发(emit)该事件，并传参，已达到父子通信的目的。vue中也可以通过event bus进行跨多级组件的数据传递。<br>### 2、用状态管理库redux、vuex<br>#### （1）react：现在没有所谓的父子通信了，只有组件和store之间的通信，store存储整个应用的数据。如上图，某个组件发生更改，在react中将dispatch一个action到store，根据reducer计算出新的state，store更新state，渲染所有引用到变更state的组件（包括父子组件）。redux是怎么实现的呢？还记得我们在App外层包了一个Provider吗？是的，你猜对了，redux是通过改变Provider传递下来的props，从而如果我组件引用到变更的props，将触发render函数（触发render函数的数据有两种props和state）。<br>#### （2）vuex：直接改变$store的东西，这时候调用的是set方法，发布通知，那么vuex怎么知道哪些是订阅者呢？要渲染哪些视图呢？如果在某个组件中用到了$store的东西，即$store.xxx那么vue通过get方法劫持到了当前组件，这些列入订阅者列表，所以我在某个组件里面更改了某个store中的某个state，vue就会将所有对应订阅列表的组件属性重新计算，视图也将重新渲染。<br><strong>以上从有无状态管理库两种情况分析了“单向数据流”的含义，个人理解，仅供参考。</strong><br>## 双向数据绑定：<br><strong>首先理解“双向”是视图和model</strong><br>### 1、vue，有双向数据绑定<br>#### view–&gt;model：通过监听原生事件，改变model(data)<br>#### model–&gt;view：这个是 每个框架实现的最大不同点了，vue是通过数据劫持，model改变调用了对应的set方法，再此“发布”一个事件，订阅者（引用该变更数据的地方）触发更新，接着触发render函数，进行页面的渲染。<br><strong>所以vue属于mvvm框架，但是底层也是通过监听原生事件和事件劫持实现view和model的同步。</strong><br><div style="display: flex; justify-content: center; align-items: center;"><br><img src="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/dubble-bind-vue.png?raw=true" alt="single-data-flow"><br></div><br>### 2、react，没有双向数据绑定<br>#### view–&gt;model：通过监听原生事件，改变model(state)<br>#### model–&gt;view：手动调用setState触发render函数，“告诉”react进行渲染。<br>说react没有双向绑定，为什么我们看到的form表单都能根据我们的数据进行对model进行变更，同时model的变更也能反映到view？因为我们自己做了双向绑定啊！还记得总有这种写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Input onClick=&#123;(name) =&gt; &#123; this.setState(&#123; name &#125;) &#125;&#125; /&gt;</span><br></pre></td></tr></table></figure><br><br>其实上面简单的一句，就实现了双向数据绑定，可能你自己都不知道自己有多牛皮！好好理解。<br><strong>所以react不属于mvvm框架，但是写起来也很爽，代码多一点，自主实现view和model的同步。</strong><br><div style="display: flex; justify-content: center; align-items: center;"><br><img src="https://www.github.com/githubalin/githubalin.github.io/blob/assets/images/dubble-bind-react.png.png?raw=true" alt="single-data-flow"><br></div>
+    
+  </div>
+
+  
+      <div class="git"></div>
+  
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持 Alin</div>
+        <ul>
+        
+          <li class="item">
+            <span>微信扫一扫</span>
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <span>支付宝扫一扫</span>
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/04/手写一个发布订阅/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/前端"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/08/04/vue、react、angular/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
