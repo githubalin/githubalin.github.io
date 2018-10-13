@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>redux系统学习二 | Alin - a water coder</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="alin,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
+  
+
+  <meta name="description" content="Reducers1、处理action reducer的格式类似(state, action) =&amp;gt; state，很像数组中的Array.prototype.reduce(reducer, ?initialValue);中的reducer函数，并且该函数是纯函数，只充当计算功能。一开始redux调用reducer的时候，state是undefined的，这时候正是初始化的好时机。原文： We’">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redux系统学习二">
+<meta property="og:url" content="http://yoursite.com/2018/10/14/redux系统学习二/index.html">
+<meta property="og:site_name" content="Alin - a water coder">
+<meta property="og:description" content="Reducers1、处理action reducer的格式类似(state, action) =&amp;gt; state，很像数组中的Array.prototype.reduce(reducer, ?initialValue);中的reducer函数，并且该函数是纯函数，只充当计算功能。一开始redux调用reducer的时候，state是undefined的，这时候正是初始化的好时机。原文： We’">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-13T16:16:58.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redux系统学习二">
+<meta name="twitter:description" content="Reducers1、处理action reducer的格式类似(state, action) =&amp;gt; state，很像数组中的Array.prototype.reduce(reducer, ?initialValue);中的reducer函数，并且该函数是纯函数，只充当计算功能。一开始redux调用reducer的时候，state是undefined的，这时候正是初始化的好时机。原文： We’">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/categories/前端"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reducers"><span class="toc-text">Reducers</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-redux系统学习二" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">redux系统学习二</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.10.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Alin</span>
+        </span>
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://www.zhengzejing.top/2018/10/14/redux系统学习二/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="Reducers"><a href="#Reducers" class="headerlink" title="Reducers"></a>Reducers</h2><p><em>1、处理action</em></p>
+<p>reducer的格式类似(state, action) =&gt; state，很像数组中的Array.prototype.reduce(reducer, ?initialValue);中的reducer函数，并且该函数是纯函数，只充当计算功能。<br>一开始redux调用reducer的时候，state是undefined的，这时候正是初始化的好时机。原文：</p>
+<p>We’ll start by specifying the initial state. Redux will call our reducer with an undefined state for the first time. This is our chance to return the initial state of our app:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const initialValue = &#123;</span><br><span class="line">  name: &apos;alin&apos;,</span><br><span class="line">  shose: [</span><br><span class="line">  	company: &apos;nike&apos;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">// app reducer</span><br><span class="line">function todoApp(state = initialValue, action) &#123;</span><br><span class="line">	return state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>不用es6写法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// app reducer</span><br><span class="line">function todoApp(state, action) &#123;</span><br><span class="line">  if (typeof state === &apos;undefined&apos;) &#123;</span><br><span class="line">    state = initialValue;</span><br><span class="line">  &#125;</span><br><span class="line">  return state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>处理改名字的action CHANGE_NAME<br>// app reducer<br>function todoApp(state = initialValue, action) {<br>switch(action.type) {<br>case ‘CHANGE_NAME’:<br>return Object.assign({}, state, {name, action.newName});<br>default:<br>return state;<br>}<br>}<br>用es6解构语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// app reducer</span><br><span class="line">function todoApp(state = initialValue, action) &#123;</span><br><span class="line">   switch(action.type) &#123;</span><br><span class="line">    case &apos;CHANGE_NAME&apos;:</span><br><span class="line">   	return &#123;...state, name: action.newName&#125;;</span><br><span class="line">    default:</span><br><span class="line">      return state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：上面的Object.assign方法属于es6语法，存在兼容性问题<br>处理多个action：增加 ADD_SHOSE_NAME<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// app reducer</span><br><span class="line">function todoApp(state = initialValue, action) &#123;</span><br><span class="line">  switch(action.type) &#123;</span><br><span class="line">  	case &apos;CHANGE_NAME&apos;:</span><br><span class="line">  		return &#123;...state, name: action.newName&#125;;</span><br><span class="line">  	case &apos;ADD_SHOSE_NAME&apos;:</span><br><span class="line">        return &#123;</span><br><span class="line">          ...state, </span><br><span class="line">          shose: [...state.shose, &#123;company: action.company&#125;]</span><br><span class="line">        &#125;</span><br><span class="line">      default:</span><br><span class="line">    	return state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>拆分reducer：<br>拆分成name和shose两个reducer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// app reducer</span><br><span class="line">function todoApp(state = &#123;&#125;, action) &#123;</span><br><span class="line">  name: name(state.name, action),</span><br><span class="line">  shose: shose(state.shose, action)</span><br><span class="line">&#125;</span><br><span class="line">// name reducer</span><br><span class="line">function name(state = &apos;alin&apos;, action) &#123;</span><br><span class="line">  switch(action.type) &#123;</span><br><span class="line">  	case &apos;CHANGE_NAME&apos;:</span><br><span class="line">  		return action.newName;</span><br><span class="line">  default:</span><br><span class="line">  	return state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// shose reducer</span><br><span class="line">function shose(state = [&#123;company: &apos;nike&apos;&#125;], action) &#123;</span><br><span class="line">  switch(action.type) &#123;</span><br><span class="line">  	case &apos;ADD_SHOSE_NAME&apos;:</span><br><span class="line">  		return [..state, &#123;company: action.name&#125;];</span><br><span class="line">  default:</span><br><span class="line">  	return state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最终，redux提供了类似 上面app reducer的一个工具方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var todoApp = combineReducers(&#123;</span><br><span class="line">  name,</span><br><span class="line">  shose</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>和上面自己写的todoApp等价</p>
+<p><a href="https://redux.js.org/basics/reducers" target="_blank" rel="noopener">https://redux.js.org/basics/reducers</a></p>
+
+    
+  </div>
+
+  
+      <div class="git"></div>
+  
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持 Alin</div>
+        <ul>
+        
+          <li class="item">
+            <span>微信扫一扫</span>
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <span>支付宝扫一扫</span>
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/14/redux第一周/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/categories/前端"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2018/10/14/redux系统学习二/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
