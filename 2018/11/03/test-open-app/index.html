@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Alin - a water coder">
 <meta property="og:description" content="test          (function(){      document.addEventListener(&apos;copy&apos;, handler, false); function handler(e) {     var selText = window.getSelection().toString();     var kouling = window.location.href.subs">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-03T16:48:26.791Z">
+<meta property="og:updated_time" content="2018-11-03T16:50:37.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test  open app">
 <meta name="twitter:description" content="test          (function(){      document.addEventListener(&apos;copy&apos;, handler, false); function handler(e) {     var selText = window.getSelection().toString();     var kouling = window.location.href.subs">
@@ -201,7 +201,6 @@
 function handler(e) {
     var selText = window.getSelection().toString();
     var kouling = window.location.href.substr(window.location.href.indexOf('=') + 1)
-    debugger;
     e.clipboardData.setData('text/plain', kouling);
     e.preventDefault();
     window.removeEventListener('copy', arguments.callee);
