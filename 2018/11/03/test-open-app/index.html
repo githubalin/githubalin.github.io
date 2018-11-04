@@ -15,17 +15,17 @@
     <meta name="keywords" content="alin,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
   
 
-  <meta name="description" content="test          (function(){      document.addEventListener(&apos;copy&apos;, handler, false); function handler(e) {     var kouling = window.location.href.substr(window.location.href.indexOf(&apos;=&apos;) + 1)     consol">
+  <meta name="description" content="点我复制          var obj = document.getElementById(&quot;kouling&quot;);     obj.value =  window.location.href.substr(window.location.href.indexOf(&apos;=&apos;) + 1);      const btn = document.querySelector(&apos;#btn&apos;);">
 <meta property="og:type" content="article">
 <meta property="og:title" content="test  open app">
 <meta property="og:url" content="http://yoursite.com/2018/11/03/test-open-app/index.html">
 <meta property="og:site_name" content="Alin - a water coder">
-<meta property="og:description" content="test          (function(){      document.addEventListener(&apos;copy&apos;, handler, false); function handler(e) {     var kouling = window.location.href.substr(window.location.href.indexOf(&apos;=&apos;) + 1)     consol">
+<meta property="og:description" content="点我复制          var obj = document.getElementById(&quot;kouling&quot;);     obj.value =  window.location.href.substr(window.location.href.indexOf(&apos;=&apos;) + 1);      const btn = document.querySelector(&apos;#btn&apos;);">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-03T16:58:45.793Z">
+<meta property="og:updated_time" content="2018-11-04T16:21:46.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test  open app">
-<meta name="twitter:description" content="test          (function(){      document.addEventListener(&apos;copy&apos;, handler, false); function handler(e) {     var kouling = window.location.href.substr(window.location.href.indexOf(&apos;=&apos;) + 1)     consol">
+<meta name="twitter:description" content="点我复制          var obj = document.getElementById(&quot;kouling&quot;);     obj.value =  window.location.href.substr(window.location.href.indexOf(&apos;=&apos;) + 1);      const btn = document.querySelector(&apos;#btn&apos;);">
 
   
 
@@ -192,22 +192,47 @@
 
   <div class="article-content">
     
-      <p><a href="https://t.asczwa.com/taobao" target="_blank" rel="noopener">test</a></p>
+      <p><input id="kouling"><br>      <button id="btn">点我复制</button></p>
 <script>
 
-       (function(){
+       var obj = document.getElementById("kouling");
+    obj.value =  window.location.href.substr(window.location.href.indexOf('=') + 1);
 
-    document.addEventListener('copy', handler, false);
-function handler(e) {
-    var kouling = window.location.href.substr(window.location.href.indexOf('=') + 1)
-    console.log(kouling+'-----');
-    e.clipboardData.setData('text/plain', kouling);
-}
-document.execCommand('copy');
-        })()
+    const btn = document.querySelector('#btn');
+    btn.click();
+    btn.addEventListener('click', () => {
+        if (navigator.userAgent.indexOf('iPhone') > -1) {
+            //苹果
+            // 获取元素内容是否可编辑和是否只读
+            var editable = obj.contentEditable;
+            var readOnly = obj.readOnly;
+            // 将对象变成可编辑的
+            obj.contentEditable = true;
+            obj.readOnly = false;
+            // 创建一个Range对象，Range 对象表示文档的连续范围区域，如用户在浏览器窗口中用鼠标拖动选中的区域
+            var range = document.createRange();
+           //获取obj的内容作为选中的范围
+            range.selectNodeContents(obj);
+            var selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            obj.setSelectionRange(0, 999999);  //选择范围，确保全选
+            //恢复原来的状态
+            obj.contentEditable = editable;
+            obj.readOnly = readOnly;
+        } else {
+            // 安卓或者pc
+              obj.select();
+        }
 
 
-  console.log(111111111111111111)
+
+        if (document.execCommand('copy')) {
+            document.execCommand('copy');
+            console.log('复制成功');
+            window.location.href = "https://t.asczwa.com/taobao";
+        }
+    })
  </script>
     
   </div>
@@ -245,7 +270,7 @@ document.execCommand('copy');
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2018/10/14/redux系统学习五/">
+    <a class="show pull-left" href="/2018/10/14/redux系统学习四/">
         <i class="icon icon-angle-left"></i>
     </a>
     <a class="hide pull-right" href="/">
